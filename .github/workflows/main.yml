@@ -5,13 +5,10 @@ on:
     branches: ['master']
 
 env:
-  AZURE_WEBAPP_NAME: auction-app   # set this to your application's name
-  AZURE_WEBAPP_PACKAGE_PATH:      # set this to the path to your web app project, defaults to the repository root
-  NODE_VERSION: '21.x'       
 
 
 jobs:
-  push_to_registry:
+  build:
     name: Push Docker image to Docker Hub
     runs-on: ubuntu-latest
     steps:
@@ -36,10 +33,24 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
+  deploy:
+    runs-on: ubuntu-latest
 
-      - name: 'Deploy to Azure WebApp'
-        uses: azure/webapps-deploy@v3
-        with: 
+    needs: build
+
+    environment:
+      name: 'production'
+      url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
+
+    steps:
+      - name: Lowercase the repo name
+        run: echo "REPO=${GITHUB_REPOSITORY,,}" >>${GITHUB_ENV}
+
+      - name: Deploy to Azure Web App
+        id: deploy-to-webapp
+        uses: azure/webapps-deploy@85270a1854658d167ab239bce43949edb336fa7c
+        with:
           app-name: ${{ env.AZURE_WEBAPP_NAME }}
           publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
-          package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
+          images: 'gsharma807/auctionrepo'
+      
