@@ -21,7 +21,7 @@ describe('AppController (e2e)', () => {
       .expect(200)
       .expect('Content-Type', /json/)
       .then(response => {
-        // Add your assertions here to verify the response data
+        expect(response).toBeTruthy();
       });
   });
 

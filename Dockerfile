@@ -7,7 +7,7 @@ COPY . .
 
 RUN cd ./client && npm install  && npm run build && cd ..
 
-RUN cd ./ && npm install  && cd ..
+RUN cd ./ && npm install && cd ..
 
 RUN mkdir -p /usr/src/app/dist
 

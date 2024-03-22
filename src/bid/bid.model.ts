@@ -1,8 +1,7 @@
 import { Schema, Prop, SchemaFactory } from '@nestjs/mongoose';
-import { Document } from 'mongoose';
 
 @Schema()
-export class Bid extends Document {
+export class Bid {
   @Prop({ required: true })
   auctionItemId: string;
 

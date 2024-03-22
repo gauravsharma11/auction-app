@@ -1,6 +1,4 @@
-// auction-item.schema.ts
 import { Schema, Prop, SchemaFactory } from '@nestjs/mongoose';
-import { Document } from 'mongoose';
 
 export interface Item {
   itemId: string;
@@ -8,7 +6,7 @@ export interface Item {
 }
 
 @Schema()
-export class AuctionItem extends Document {
+export class AuctionItem  {
   @Prop()
   auctionItemId: string;
 

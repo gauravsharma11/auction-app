@@ -1,7 +1,7 @@
 
 import { Controller, Get, Post, Body, Param, NotFoundException, ConflictException, Logger, InternalServerErrorException } from '@nestjs/common';
 import { AuctionService } from './auction.service';
-import { AuctionItem } from './auction-item.schema';
+import { AuctionItem } from './auction-item.model';
 
 @Controller('auctionItems')
 export class AuctionController {

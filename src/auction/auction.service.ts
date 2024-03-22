@@ -3,14 +3,12 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { AuctionItem } from './auction-item.model';
 import ShortUniqueId from 'short-unique-id';
-import { Bid } from 'src/bid/bid.model';
+import { Bid } from './../bid/bid.model'
 
 const { randomUUID } = new ShortUniqueId({ length: 10 });
 
 @Injectable()
 export class AuctionService {
-
-  
   private readonly logger = new Logger(AuctionService.name);
 
   constructor(@InjectModel('AuctionItem') private readonly auctionItem: Model<AuctionItem>,
@@ -64,7 +62,7 @@ export class AuctionService {
         }
       }
       // Determine the winning bidder and update the current bid
-      const updatedItem = await this.auctionItem.findOneAndUpdate(
+      const updatedItem: AuctionItem = await this.auctionItem.findOneAndUpdate(
         { "auctionItemId" : auctionItemId },
         { currentBid: bidAmount, bidderName },
         { new: true }

@@ -5,6 +5,7 @@ import { AuctionService } from './auction/auction.service';
 import { MongooseModule } from '@nestjs/mongoose';
 import { AuctionItemSchema } from './auction/auction-item.model';
 import { BidSchema } from './bid/bid.model';
+import { ValidationService } from './ValidationService';
 
 @Module({
   imports: [
@@ -13,6 +14,6 @@ import { BidSchema } from './bid/bid.model';
     MongooseModule.forFeature([{ name: 'Bid', schema: BidSchema }]),
   ],
   controllers: [AuctionController, BidController],
-  providers: [AuctionService],
+  providers: [AuctionService, ValidationService],
 })
 export class AppModule {}
