@@ -5,9 +5,9 @@ WORKDIR /usr/src/app
 
 COPY . .
 
-RUN cd ./client && npm ci  && npm run build && cd ..
+RUN cd ./client && npm install  && npm run build && cd ..
 
-RUN cd ./ && npm ci  && cd ..
+RUN cd ./ && npm install  && cd ..
 
 RUN mkdir -p /usr/src/app/dist
 
