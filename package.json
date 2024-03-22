@@ -31,9 +31,7 @@
     "mongoose": "^8.2.2",
     "reflect-metadata": "^0.2.0",
     "rxjs": "^7.8.1",
-    "short-unique-id": "^5.0.3",
-    "uniqid": "^5.4.0",
-    "uuid": "^9.0.1"
+    "short-unique-id": "^5.0.3"
   },
   "devDependencies": {
     "@nestjs/cli": "^10.0.0",
