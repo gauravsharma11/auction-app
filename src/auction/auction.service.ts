@@ -2,7 +2,6 @@ import { BadRequestException, Injectable, InternalServerErrorException, Logger, 
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { AuctionItem } from './auction-item.model';
-import uniqid from 'uniqid';
 import ShortUniqueId from 'short-unique-id';
 import { Bid } from 'src/bid/bid.model';
 
