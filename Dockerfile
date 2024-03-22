@@ -1,23 +1,22 @@
-# Use the official Node.js 14 image as a base
 FROM node:21
+RUN mkdir -p /usr/src/app
 
-# Set the working directory inside the container
-WORKDIR /app
+WORKDIR /usr/src/app
 
-# Copy package.json and package-lock.json to the working directory
-COPY package*.json ./
-
-# Install dependencies
-RUN npm install
-
-# Copy the rest of the application code
 COPY . .
 
-# Build the application
+RUN cd ./client && npm ci  && npm run build && cd ..
+
+RUN cd ./ && npm ci  && cd ..
+
+RUN mkdir -p /usr/src/app/dist
+
+RUN cp -r ./client/build/* ./dist/
+
+WORKDIR  /usr/src/app/
+
 RUN npm run build
 
-# Expose port 3000 (the default port for NestJS applications)
-EXPOSE 3000
+EXPOSE 5000
 
-# Command to run the application
-CMD ["node", "dist/main"]
+CMD [ "npm", "run", "start:dev" ]

@@ -8,7 +8,7 @@ import { BidSchema } from './bid/bid.model';
 
 @Module({
   imports: [
-    MongooseModule.forRoot('mongodb://localhost:27017/auctionDB', {}),
+    MongooseModule.forRoot('mongodb://127.0.0.1:27017/auctionDB?directConnection=true', {}),
     MongooseModule.forFeature([{ name: 'AuctionItem', schema: AuctionItemSchema }]),
     MongooseModule.forFeature([{ name: 'Bid', schema: BidSchema }]),
   ],
