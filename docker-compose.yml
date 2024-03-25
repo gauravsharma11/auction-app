@@ -1,27 +1,21 @@
 version: '3'
 
+
 services:
   nestjs-app:
-    build: .
+    restart: always
+    container_name: nestjs-app
+    build: 
+      context: .
+      dockerfile: Dockerfile
     ports:
-      - "3000:3000"
-    depends_on:
-      - mongodb
+        - "3000:3000"
     environment:
-      - MONGO_URI=mongodb://mongo:27017/auctionDB
+      - NODE_ENV=production
 
-  mongodb:
-    image: mongo:6-jammy
-    ports:
-      - '27017:27017'
-    volumes:
-      - dbdata6:/data/db
-    networks:
-      - node-network
-
-volumes:
-  dbdata6:
-
-networks:
-  node-network:
-    driver: bridge
+  mongodbapp:
+      image: mongo:latest
+      environment:
+        - MONGODB_DATABASE="auctionDB"
+      ports:
+        - 27017:27017
