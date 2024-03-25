@@ -8,7 +8,7 @@ COPY . .
 
 RUN cd ./client && npm ci  && npm run build && cd ..
 
-RUN cd ./ && npm ci  && cd ..
+RUN npm ci
 
 RUN mkdir -p /usr/src/app/public
 
