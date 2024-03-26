@@ -53,6 +53,4 @@ jobs:
         with:
           service: auctionapp
           image: gcr.io/${{ secrets.GCP_PROJECT_ID }}/auctionapp:latest
-          region: us-central1
-          project_id: ${{ secrets.GCP_PROJECT_ID }}
       
