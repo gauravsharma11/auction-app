@@ -30,12 +30,6 @@ jobs:
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
-
-      - name: Docker meta for MongoDB
-        id: mongodbapp-meta
-        uses: docker/metadata-action@v5
-        with:
-            images: gsharma807/mongodbapp
         
       - name: Docker meta for NestJS Service
         id: nestjsapp-meta
@@ -80,15 +74,12 @@ jobs:
       - name: Configure Docker to authenticate with GCR
         run: gcloud auth configure-docker
       
-      - name: Pull MongoDB Docker image from Docker Hub
-        run: docker pull gsharma807/mongodbapp:latest
-
       - name: Pull Nest JS Docker image from Docker Hub
         run: docker pull gsharma807/nestjsapp:latest
 
       - name: Tag Docker image for GCR
         run: |
-          docker tag gsharma807/mongodbapp:latest gcr.io/${{ secrets.GCP_PROJECT_ID }}/mongodbapp:latest
+          docker tag mongo:latest gcr.io/${{ secrets.GCP_PROJECT_ID }}/mongodbapp:latest
           docker tag gsharma807/nestjsapp:latest gcr.io/${{ secrets.GCP_PROJECT_ID }}/nestjsapp:latest
 
       - name: Push Docker image to GCR
