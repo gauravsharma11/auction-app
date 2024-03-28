@@ -23,7 +23,7 @@ services:
       ports:
         - 27017:27017
       depends_on:
-        - nestjs-app
+        - nestjsapp
       networks:
           - app-network
 
