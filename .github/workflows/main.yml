@@ -93,16 +93,20 @@ jobs:
       # - name: Deploy to Cloud Run
       #   run: gcloud run deploy auction-app --image=gcr.io/${{ secrets.GCP_PROJECT_ID }}/gsharma807/auctionrepo:latest --platform=managed --region=us-central1
 
-      - name: Deploy to Google Cloud Run
+      - name: Deploy MongoDB App to Google Cloud Run
         run: |
           gcloud run deploy mongo-service \
             --image=gcr.io/${{ secrets.GCP_PROJECT_ID }}/mongodbapp:latest \
             --platform=managed \
             --region=us-central1 \
+            --port=27017 \
             --project=${{ secrets.GCP_PROJECT_ID }}
 
+      - name: Deploy NestJS App to Google Cloud Run
+        run: |
           gcloud run deploy nestjs-service \
             --image=gcr.io/${{ secrets.GCP_PROJECT_ID }}/nestjsapp:latest \
             --platform=managed \
             --region=us-central1 \
+            --port=3000 \
             --project=${{ secrets.GCP_PROJECT_ID }}
