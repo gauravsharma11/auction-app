@@ -16,6 +16,9 @@ jobs:
       - name: Check out the repo
         uses: actions/checkout@v3
 
+      - name: Npm Install
+        run: npm install --fastify
+
       - name: Run unit tests
         run: npm test
 
