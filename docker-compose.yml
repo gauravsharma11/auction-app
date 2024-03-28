@@ -20,3 +20,5 @@ services:
         - MONGODB_DATABASE="auctionDB"
       ports:
         - 27017:27017
+      depends_on:
+      - nestjs-app
