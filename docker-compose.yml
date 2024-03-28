@@ -12,8 +12,8 @@ services:
         - "3000:3000"
     environment:
       - NODE_ENV=production
-    networks:
-      - app-network
+    # networks:
+    #   - app-network
 
   mongodbapp:
       image: mongo:latest
@@ -24,9 +24,9 @@ services:
         - 27017:27017
       depends_on:
         - nestjsapp
-      networks:
-          - app-network
+      # networks:
+      #     - app-network
 
-networks:
-  app-network:
-    driver: bridge
+# networks:
+#   app-network:
+#     driver: bridge
