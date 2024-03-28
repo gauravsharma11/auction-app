@@ -52,5 +52,5 @@ jobs:
         uses: google-github-actions/deploy-cloudrun@v1
         with:
           service: auctionapp
-          image: gcr.io/${{ secrets.GCP_PROJECT_ID }}/auctionapp:latest
+          image: gsharma807/auctionrepo:latest
       
