@@ -10,9 +10,11 @@ import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
 
 
+const uri = 'mongodb://mongodbapp-nfv7ngy4gq-uc.a.run.app:27017/'
+
 @Module({
   imports: [
-    MongooseModule.forRoot('mongodb://mongodbapp:27017/'),
+    MongooseModule.forRoot(uri),
     MongooseModule.forFeature([{ name: 'AuctionItem', schema: AuctionItemSchema }]),
     MongooseModule.forFeature([{ name: 'Bid', schema: BidSchema }]),
     ServeStaticModule.forRoot({
