@@ -1,4 +1,4 @@
-FROM alpine3
+FROM node:alpine3.19
 
 RUN mkdir -p /usr/src/app
 
