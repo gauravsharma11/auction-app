@@ -51,7 +51,7 @@ jobs:
         run: cd .. && ls -al
 
       - name: Run Docker Compose
-        run: docker-compose -f ./docker-compose.yml up -d --build
+        run: cd .. && docker-compose -f auction-app/docker-compose.yml up -d --build
 
       - name: Configure Docker to authenticate with GCR
         run: gcloud auth configure-docker
