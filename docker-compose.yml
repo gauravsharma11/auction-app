@@ -2,10 +2,10 @@ version: '3'
 
 
 services:
-  nestjs-app:
-    image: gsharma807/auctionrepo
+  nestjsapp:
+    image: gsharma807/nestjsapp
     restart: always
-    container_name: nestjs-app
+    container_name: nestjsapp
     build: 
       context: .
       dockerfile: Dockerfile
@@ -13,6 +13,8 @@ services:
         - "3000:3000"
     environment:
       - NODE_ENV=production
+    networks:
+      - app-network
 
   mongodbapp:
       image: mongo:latest
@@ -21,4 +23,10 @@ services:
       ports:
         - 27017:27017
       depends_on:
-      - nestjs-app
+        - nestjs-app
+      networks:
+          - app-network
+
+networks:
+  app-network:
+    driver: bridge

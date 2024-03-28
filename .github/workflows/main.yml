@@ -31,16 +31,28 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
       
-      - name: Docker meta
-        id: meta
-        uses: docker/metadata-action@v5
-        with:
-          images: gsharma807/auctionrepo
-
-      - name: Tag and push Docker images
+      - name: Docker meta for MongoDB and NestJS services
+        id: docker-meta
         run: |
-          docker login -u "${{ secrets.DOCKER_USERNAME }}" -p "${{ secrets.DOCKER_PASSWORD }}"
-          docker-compose push
+            docker/metadata-action@v5 with images=gsharma807/mongodbapp
+            docker/metadata-action@v5 with images=gsharma807/nestjsapp
+
+      - name: Build and push MongoDB image
+        run: |
+          docker build -t gsharma807/mongodbapp:latest .
+          echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
+          docker push gsharma807/mongodbapp:latest
+  
+      - name: Build and push NestJS image
+        run: |
+          docker build -t your-dockerhub-username/nestjsapp:latest ./nestjs-app
+          echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
+          docker push gsharma807/nestjsapp:latest
+
+      # - name: Tag and push Docker images
+      #   run: |
+      #     docker login -u "${{ secrets.DOCKER_USERNAME }}" -p "${{ secrets.DOCKER_PASSWORD }}"
+      #     docker-compose push
 
       # - name: Build and push
       #   uses: docker/build-push-action@v5
@@ -66,10 +78,28 @@ jobs:
         run: docker pull gsharma807/auctionrepo:latest
 
       - name: Tag Docker image for GCR
-        run: docker tag gsharma807/auctionrepo:latest gcr.io/${{ secrets.GCP_PROJECT_ID }}/gsharma807/auctionrepo:latest
+        run: |
+          docker tag gsharma807/mongodbapp:latest gcr.io/${{ secrets.GCP_PROJECT_ID }}/mongodbapp:latest
+          docker tag gsharma807/nestjsapp:latest gcr.io/${{ secrets.GCP_PROJECT_ID }}/nestjsapp:latest
 
       - name: Push Docker image to GCR
-        run: docker push gcr.io/${{ secrets.GCP_PROJECT_ID }}/gsharma807/auctionrepo:latest
+        run: |
+          docker push gcr.io/${{ secrets.GCP_PROJECT_ID }}/mongodbapp:latest
+          docker push gcr.io/${{ secrets.GCP_PROJECT_ID }}/nestjsapp:latest
 
-      - name: Deploy to Cloud Run
-        run: gcloud run deploy auction-app --image=gcr.io/${{ secrets.GCP_PROJECT_ID }}/gsharma807/auctionrepo:latest --platform=managed --region=us-central1
+      # - name: Deploy to Cloud Run
+      #   run: gcloud run deploy auction-app --image=gcr.io/${{ secrets.GCP_PROJECT_ID }}/gsharma807/auctionrepo:latest --platform=managed --region=us-central1
+
+      - name: Deploy to Google Cloud Run
+        run: |
+          gcloud run deploy mongo-service \
+            --image=gcr.io/${{ secrets.GCP_PROJECT_ID }}/mongodbapp:latest \
+            --platform=managed \
+            --region=us-central1 \
+            --project=${{ secrets.GCP_PROJECT_ID }}
+
+          gcloud run deploy nestjs-service \
+            --image=gcr.io/${{ secrets.GCP_PROJECT_ID }}/nestjsapp:latest \
+            --platform=managed \
+            --region=us-central1 \
+            --project=${{ secrets.GCP_PROJECT_ID }}
