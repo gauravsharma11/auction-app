@@ -15,7 +15,6 @@ jobs:
     steps:
       - name: Check out the repo
         uses: actions/checkout@v3
-      - run: npm install
 
       - name: Run unit tests
         run: npm test
