@@ -47,8 +47,11 @@ jobs:
         with:
           credentials_json: ${{ secrets.GCP_SA_KEY }}
 
+      - name: List files in root directory
+        run: ls -al
+
       - name: Run Docker Compose
-        run: docker-compose up -d
+        run: docker-compose -f ./docker-compose.yml up -d --build
 
       - name: Configure Docker to authenticate with GCR
         run: gcloud auth configure-docker
