@@ -95,7 +95,7 @@ jobs:
 
       - name: Deploy MongoDB App to Google Cloud Run
         run: |
-          gcloud run deploy mongo-service \
+          gcloud run deploy mongodbapp \
             --image=gcr.io/${{ secrets.GCP_PROJECT_ID }}/mongodbapp:latest \
             --platform=managed \
             --region=us-central1 \
@@ -104,7 +104,7 @@ jobs:
 
       - name: Deploy NestJS App to Google Cloud Run
         run: |
-          gcloud run deploy nestjs-service \
+          gcloud run deploy nestjsapp \
             --image=gcr.io/${{ secrets.GCP_PROJECT_ID }}/nestjsapp:latest \
             --platform=managed \
             --region=us-central1 \
