@@ -30,13 +30,19 @@ jobs:
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
-      
-      - name: Docker meta for MongoDB and NestJS services
-        id: docker-meta
-        run: |
-            docker/metadata-action@v5 with images=gsharma807/mongodbapp
-            docker/metadata-action@v5 with images=gsharma807/nestjsapp
 
+      - name: Docker meta for MongoDB
+        id: mongodbapp-meta
+        uses: docker/metadata-action@v5
+        with:
+            images: gsharma807/mongodbapp
+        
+      - name: Docker meta for NestJS Service
+        id: nestjsapp-meta
+        uses: docker/metadata-action@v5
+        with:
+            images: gsharma807/nestjsapp
+      
       - name: Build and push MongoDB image
         run: |
           docker build -t gsharma807/mongodbapp:latest .

@@ -1,6 +1,5 @@
 version: '3'
 
-
 services:
   nestjsapp:
     image: gsharma807/nestjsapp
@@ -18,6 +17,7 @@ services:
 
   mongodbapp:
       image: mongo:latest
+      container_name: mongodbapp
       environment:
         - MONGODB_DATABASE="auctionDB"
       ports:
