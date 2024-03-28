@@ -47,6 +47,9 @@ jobs:
         with:
           credentials_json: ${{ secrets.GCP_SA_KEY }}
 
+      - name: Run Docker Compose
+        run: docker-compose up -d
+
       - name: Configure Docker to authenticate with GCR
         run: gcloud auth configure-docker
       
