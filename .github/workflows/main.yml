@@ -73,6 +73,9 @@ jobs:
 
       - name: Configure Docker to authenticate with GCR
         run: gcloud auth configure-docker
+
+      - name: Pull MongoDB image from Docker Hub
+        run: docker pull mongo:latest
       
       - name: Pull Nest JS Docker image from Docker Hub
         run: docker pull gsharma807/nestjsapp:latest
